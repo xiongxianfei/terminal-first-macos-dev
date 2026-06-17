@@ -103,6 +103,10 @@ Use Apple's Software Update path for macOS updates:
 - Accept stable macOS updates offered for this device.
 - Beta releases are not the default setup path.
 
+Source reference:
+
+- Apple Support: [Update macOS on Mac](https://support.apple.com/en-us/108382).
+
 Review these Apple-owned system concerns before package-manager setup:
 
 - FileVault status.
@@ -116,6 +120,10 @@ Apple-owned system tooling means macOS updates, Software Update, Xcode, Command 
 ## Apple developer tooling
 
 Install or verify Apple Command Line Tools or Xcode tooling before package-manager-dependent developer setup.
+
+Source reference:
+
+- Apple Developer: [Installing the command-line tools](https://developer.apple.com/documentation/xcode/installing-the-command-line-tools).
 
 Suggested checks for the later manual walkthrough:
 
@@ -145,6 +153,11 @@ Before installing or changing Homebrew:
 - Use `brew update` for Homebrew package metadata after Homebrew is installed.
 - Use `brew doctor` as the health check before depending on the installation.
 - Keep uninstall or rollback notes nearby. Use Homebrew's official uninstall guidance if removal is needed.
+
+Source references:
+
+- Homebrew Documentation: [Installation](https://docs.brew.sh/Installation).
+- Homebrew install repository: [Homebrew/install](https://github.com/Homebrew/install).
 
 Suggested checks for the later manual walkthrough:
 
