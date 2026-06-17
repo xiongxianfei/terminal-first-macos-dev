@@ -8,7 +8,7 @@ This repository is the macOS companion surface for MacBook setup guidance. It do
 
 - First slice: a personal developer MacBook terminal baseline.
 - Primary verified target: Apple silicon, after manual verification evidence is recorded.
-- Current status: baseline guide, verification, and validation locations are established; full setup content and manual verification evidence are still downstream work.
+- Current status: baseline guide content, verification location, and validation checks are established; manual verification evidence is still downstream work.
 
 ## Start here
 

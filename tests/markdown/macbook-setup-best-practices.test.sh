@@ -34,6 +34,26 @@ assert_not_contains() {
   fi
 }
 
+line_number() {
+  local path="$1"
+  local pattern="$2"
+  local line
+  line="$(grep -Einm 1 "$pattern" "$path" | cut -d: -f1 || true)"
+  [[ -n "$line" ]] || fail "${path#$ROOT/} missing ordering marker: $pattern"
+  printf '%s\n' "$line"
+}
+
+assert_before() {
+  local path="$1"
+  local first="$2"
+  local second="$3"
+  local description="$4"
+  local first_line second_line
+  first_line="$(line_number "$path" "$first")"
+  second_line="$(line_number "$path" "$second")"
+  (( first_line < second_line )) || fail "${path#$ROOT/} has wrong order for ${description}"
+}
+
 assert_file "$README"
 assert_file "$GUIDE_INDEX"
 assert_file "$GUIDE"
@@ -50,12 +70,64 @@ assert_contains "$GUIDE_INDEX" 'personal developer MacBook' 'first-slice audienc
 assert_contains "$GUIDE" '^## Scope$' 'Scope section'
 assert_contains "$GUIDE" '^## Traceability$' 'Traceability section'
 assert_contains "$GUIDE" '^## Verification status$' 'Verification status section'
-assert_contains "$GUIDE" '^## First-slice outline$' 'First-slice outline section'
+assert_contains "$GUIDE" '^## Prerequisites$' 'Prerequisites section'
+assert_contains "$GUIDE" '^## Outcome$' 'Outcome section'
+assert_contains "$GUIDE" '^## Safety gates before setup changes$' 'Safety gates section'
+assert_contains "$GUIDE" '^## Ownership context$' 'Ownership context section'
+assert_contains "$GUIDE" '^## Hardware and compatibility$' 'Hardware and compatibility section'
+assert_contains "$GUIDE" '^## Backup and Apple-owned system setup$' 'Backup and Apple-owned system setup section'
+assert_contains "$GUIDE" '^## Apple developer tooling$' 'Apple developer tooling section'
+assert_contains "$GUIDE" '^## Homebrew for third-party CLI tooling$' 'Homebrew section'
+assert_contains "$GUIDE" '^## Shell, Git, SSH, and editor baseline$' 'Shell, Git, SSH, and editor section'
+assert_contains "$GUIDE" '^## Follow-up modules$' 'Follow-up modules section'
 assert_contains "$GUIDE" 'personal developer MacBook' 'personal MacBook audience'
 assert_contains "$GUIDE" 'Apple silicon' 'Apple silicon target'
 assert_contains "$GUIDE" 'does not change.*terminal-first-windows-dev' 'Windows repository non-change statement'
 assert_contains "$GUIDE" 'proposal.*spec.*plan' 'proposal/spec/plan traceability'
 assert_contains "$GUIDE" 'manual verification.*not.*complete|not.*complete.*manual verification' 'unverified manual walkthrough status'
+assert_contains "$GUIDE" 'MDM' 'managed-Mac MDM routing'
+assert_contains "$GUIDE" 'endpoint security' 'managed-Mac endpoint security routing'
+assert_contains "$GUIDE" 'certificate' 'managed-Mac certificate routing'
+assert_contains "$GUIDE" 'proxy' 'managed-Mac proxy routing'
+assert_contains "$GUIDE" 'restricted administrator' 'restricted administrator routing'
+assert_contains "$GUIDE" 'hardware model' 'hardware model guidance'
+assert_contains "$GUIDE" 'CPU architecture|uname -m' 'CPU architecture guidance'
+assert_contains "$GUIDE" 'Intel.*unverified|unverified.*Intel' 'Intel non-claim language'
+assert_contains "$GUIDE" 'backup posture' 'backup posture gate'
+assert_contains "$GUIDE" 'Software Update' 'Apple Software Update path'
+assert_contains "$GUIDE" 'beta.*not.*default|not.*default.*beta' 'beta exclusion'
+assert_contains "$GUIDE" 'FileVault' 'FileVault review'
+assert_contains "$GUIDE" 'recovery-key|recovery key' 'recovery-key handling'
+assert_contains "$GUIDE" 'Apple Account' 'Apple Account assumption'
+assert_contains "$GUIDE" 'administrator' 'administrator assumption'
+assert_contains "$GUIDE" 'Privacy & Security' 'Privacy & Security review'
+assert_contains "$GUIDE" 'Command Line Tools|Xcode' 'Apple developer tooling'
+assert_contains "$GUIDE" 'Apple-owned system tooling' 'Apple-owned tooling boundary'
+assert_contains "$GUIDE" 'third-party developer CLI tooling' 'third-party tooling boundary'
+assert_contains "$GUIDE" 'Homebrew' 'Homebrew coverage'
+assert_contains "$GUIDE" '/opt/homebrew' 'Apple silicon Homebrew prefix'
+assert_contains "$GUIDE" 'install script' 'Homebrew install-script review'
+assert_contains "$GUIDE" 'brew update' 'Homebrew update behavior'
+assert_contains "$GUIDE" 'brew doctor' 'Homebrew health check'
+assert_contains "$GUIDE" 'uninstall|rollback' 'Homebrew rollback notes'
+assert_contains "$GUIDE" 'zsh' 'zsh shell boundary'
+assert_contains "$GUIDE" '\.zprofile|\.zshrc' 'zsh profile file guidance'
+assert_contains "$GUIDE" 'PATH' 'PATH change guidance'
+assert_contains "$GUIDE" 'Git identity' 'Git identity readiness'
+assert_contains "$GUIDE" 'SSH key' 'SSH key handling'
+assert_contains "$GUIDE" 'credential' 'credential storage expectations'
+assert_contains "$GUIDE" 'minimal editor' 'minimal editor availability'
+assert_contains "$GUIDE" 'persistent state|inspect.*reverse|reverse.*inspect' 'persistent-state auditability'
+assert_contains "$GUIDE" 'Mac App Store automation.*defer|defer.*Mac App Store automation' 'Mac App Store automation deferral'
+assert_contains "$GUIDE" 'web development|Python|containers|cloud tooling|GUI app bundles|full editor configuration' 'role-specific follow-up routing'
+assert_contains "$GUIDE" 'Do not add hidden setup automation|hidden setup automation' 'hidden automation non-goal'
+
+assert_before "$GUIDE" '^## Ownership context$' '^## Hardware and compatibility$' 'ownership before hardware'
+assert_before "$GUIDE" '^## Ownership context$' '^## Homebrew for third-party CLI tooling$' 'ownership before package manager'
+assert_before "$GUIDE" '^## Safety gates before setup changes$' '^## Homebrew for third-party CLI tooling$' 'safety gates before Homebrew'
+assert_before "$GUIDE" '^## Backup and Apple-owned system setup$' '^## Apple developer tooling$' 'backup before developer tooling'
+assert_before "$GUIDE" '^## Apple developer tooling$' '^## Homebrew for third-party CLI tooling$' 'Apple tooling before Homebrew'
+assert_before "$GUIDE" '^## Homebrew for third-party CLI tooling$' '^## Shell, Git, SSH, and editor baseline$' 'Homebrew before shell integration'
 
 assert_contains "$VERIFY" '^## Required evidence fields$' 'required evidence fields section'
 assert_contains "$VERIFY" 'sw_vers' 'sw_vers evidence field'
@@ -68,7 +140,7 @@ assert_contains "$VERIFY" 'personal or managed' 'ownership context evidence fiel
 assert_contains "$VERIFY" 'No command-success or compatibility claims are verified yet' 'unverified claims statement'
 
 for path in "$README" "$GUIDE_INDEX" "$GUIDE" "$VERIFY"; do
-  assert_not_contains "$path" 'Brewfile|one-command bootstrap|opaque dotfile|generated dotfile|mas install|Mac App Store automation' 'first-slice automation or deferred tooling'
+  assert_not_contains "$path" 'brew bundle|mas install' 'first-slice automation commands'
 done
 
 printf 'PASS: MacBook setup companion baseline checks passed\n'

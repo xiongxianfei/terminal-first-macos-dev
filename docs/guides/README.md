@@ -4,7 +4,7 @@ This directory contains terminal-first macOS guidance for a personal developer M
 
 ## Available guides
 
-- [MacBook terminal baseline](macbook-terminal-baseline.md): first-slice scaffold for the personal developer MacBook setup path.
+- [MacBook terminal baseline](macbook-terminal-baseline.md): first-slice guide for the personal developer MacBook setup path.
 
 ## Scope boundary
 
