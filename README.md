@@ -1,29 +1,34 @@
-# GitHub Repository Template
+# terminal-first-macos-dev
 
-A small, language-agnostic template for starting a new GitHub repository with only the essentials.
+Concise, auditable setup guidance for a terminal-first personal developer MacBook.
 
-## Included
+This repository is the macOS companion surface for MacBook setup guidance. It does not change the `terminal-first-windows-dev` repository vision, and it does not add macOS guide content to that Windows-first repository by default.
 
-- `README.md` — project overview and setup notes
-- `LICENSE` — project license
-- `CONTRIBUTING.md` — contribution guidelines
-- `CODE_OF_CONDUCT.md` — community expectations
-- `SECURITY.md` — vulnerability reporting instructions
-- `.gitignore` — common local files to ignore
+## Current scope
 
-## Use this template
+- First slice: a personal developer MacBook terminal baseline.
+- Primary verified target: Apple silicon, after manual verification evidence is recorded.
+- Current status: baseline guide content, verification location, and validation checks are established; manual verification evidence is still downstream work.
 
-1. Create a new repository from this template.
-2. Replace placeholder text with project-specific details.
-3. Keep only the files your project will actively maintain.
-4. Add tests, scripts, and CI only after the project has real commands to run.
+## Start here
 
-## Recommended repository settings
+- Guide index: [docs/guides/README.md](docs/guides/README.md)
+- MacBook terminal baseline: [docs/guides/macbook-terminal-baseline.md](docs/guides/macbook-terminal-baseline.md)
+- Verification template: [docs/verification/macbook-terminal-baseline.md](docs/verification/macbook-terminal-baseline.md)
 
-- Use `main` as the default branch.
-- Require pull requests before merging when collaborating.
-- Prefer small, focused pull requests.
-- Protect important branches from force pushes.
+## Validation
+
+Run the static baseline check from this repository:
+
+```bash
+bash tests/markdown/macbook-setup-best-practices.test.sh
+```
+
+The check validates repository structure, companion-surface boundary wording, traceability, and verification-template fields. It does not execute setup commands.
+
+## Traceability
+
+This companion baseline follows the approved MacBook setup best-practices proposal, spec, test spec, and plan in `../20260524-terminal-dev`.
 
 ## License
 
