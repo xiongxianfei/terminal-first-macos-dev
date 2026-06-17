@@ -228,7 +228,3 @@ Defer these topics to later modules:
 - Full editor configuration.
 
 Do not add hidden setup automation, one-command bootstrap behavior, generated dotfiles, or opaque dotfile installers in this first slice.
-
-## Current milestone
-
-M2 authors the personal MacBook terminal-baseline guide and extends the static proof script. M3 still owns the final manual verification evidence package.

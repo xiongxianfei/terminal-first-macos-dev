@@ -161,4 +161,6 @@ for path in "$README" "$GUIDE_INDEX" "$GUIDE" "$VERIFY"; do
   assert_not_contains "$path" 'brew bundle|mas install' 'first-slice automation commands'
 done
 
+assert_not_contains "$GUIDE" '^## Current milestone$|M[0-9]+ still owns|M[0-9]+ authors' 'workflow milestone status in reader guide'
+
 printf 'PASS: MacBook setup companion baseline checks passed\n'
