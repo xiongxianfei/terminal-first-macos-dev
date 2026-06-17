@@ -1,0 +1,24 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Local AI agent configs / workspace state
+/.codex/
+/.agents/
+/.claude/
+/.cursor/
+/windsurf/
+/.gemini/
