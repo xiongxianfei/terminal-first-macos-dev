@@ -25,6 +25,8 @@ Manual verification is not complete. Treat each terminal command as a guide cont
 
 Before any future edit marks a command, compatibility target, or setup state as verified, record the exact evidence in [../verification/macbook-terminal-baseline.md](../verification/macbook-terminal-baseline.md).
 
+When recording evidence, use explicit status labels: `verified`, `manually checked`, `skipped`, `blocked`, or `policy-dependent`.
+
 ## Prerequisites
 
 - Use a personal developer MacBook where you control the setup choices.
